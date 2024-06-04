@@ -1,6 +1,35 @@
 # next steps:
 1. Use any optimizer to find a point on the "boundary"
-2. Use basin hopping to move in 4 directions, find new minima, use min/max to choose new "extrema"
+2. Use basin hopping to move in 4 directions, find new minima, use min/max to choose new "extrema". Stop criteria when extrema are unchanging?
+3. Compare with other methods, like using 10 different start points for optimization
+
+```python
+import numpy as np
+from scipy.optimize import basinhopping
+
+# Define the Rosenbrock function
+def rosenbrock(x):
+    a = 1
+    b = 100
+    return (a - x[0])**2 + b * (x[1] - x[0]**2)**2
+
+# Define the bounds
+bounds = [(-5, 5), (-5, 5)]
+
+# Define a callback function to print intermediate solutions
+def callback(x, f, accept):
+    print(f"Intermediate solution: {x}, Objective value: {f}, Accepted: {accept}")
+
+# Minimizer configuration
+minimizer_kwargs = {"method": "L-BFGS-B", "bounds": bounds}
+
+# Run the Basin-Hopping algorithm
+result = basinhopping(rosenbrock, x0=np.array([0, 0]), minimizer_kwargs=minimizer_kwargs, niter=100, callback=callback)
+
+# Print the final result
+print("Best solution found:", result.x)
+print("Objective value at best solution:", result.fun)
+```
 
 # inverse-solutions
 
