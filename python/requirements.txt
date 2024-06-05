@@ -1,0 +1,4 @@
+deap
+scipy
+pyswarm
+matplotlib
